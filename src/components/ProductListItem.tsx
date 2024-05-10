@@ -18,6 +18,7 @@ interface ListProps {
      <Image
       source={{ uri: product.image || defaultPizzaImage}}
       style={styles.image}
+    resizeMode='contain'
      />
     <Text style={styles.title}>{product.name}</Text>
     <Text style={styles.price}>{product.price}</Text>
@@ -29,9 +30,12 @@ export default ProductListItem;
 
 const styles = StyleSheet.create({
     container: {
+      flex: 1,
       backgroundColor: Colors.light.background,
       padding: 10,
       borderRadius: 20,
+      maxWidth: "50%",
+      
     },
     image :{
       width: "100%",

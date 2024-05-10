@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image , Text, ScrollView} from 'react-native';
+import { StyleSheet, ScrollView, FlatList} from 'react-native';
 
 
 import products from '@assets/data/products';
@@ -9,23 +9,17 @@ import ProductListItem from '@components/ProductListItem';
 
 export default function TabOneScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <FlatList  data={products} renderItem={ ({item }) => <ProductListItem product={item}/> } numColumns={2} contentContainerStyle={styles.container} columnWrapperStyle={{gap: 10}} />
   
-     {products.map((product, index) => (
-       <ProductListItem key={index} product={product} />
-      ))}
 
-    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
- 
-   flexDirection: 'column',
-   gap: 10,
-   padding: 10,
-   backgroundColor: Colors.light.tabIconDefault,
+    backgroundColor: Colors.light.tabIconDefault,
+    padding: 10,
+    gap: 10,
   },
 
 });
