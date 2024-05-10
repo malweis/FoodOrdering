@@ -1,10 +1,10 @@
 import { StyleSheet, View, Image , Text, ScrollView} from 'react-native';
 
 
-import products from '@/assets/data/products';
+import products from '@assets/data/products';
 
-import Colors from '@/src/constants/Colors';
-import ProductListItem from '@/src/components/ProductListItem';
+import Colors from '@constants/Colors';
+import ProductListItem from '@components/ProductListItem';
 
 
 export default function TabOneScreen() {
