@@ -1,17 +1,20 @@
-import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Image, Alert } from 'react-native'
 import React from 'react'
 import Button from '@/components/Button'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
 import * as ImagePicker from 'expo-image-picker';
-import { Stack } from 'expo-router'
+import { Stack, useLocalSearchParams } from 'expo-router'
 
 const CreateProductScreen = () => {
+
     const [name, setName] = React.useState('')
     const [price, setPrice] = React.useState('')
     const [image, setImage] = React.useState<string | null >(null);
 
     const [error, setError] = React.useState('')
+    const {id} = useLocalSearchParams()
+    const isUpdating = !!id
 
     const resetFields = () => {
         setName('')
@@ -41,6 +44,38 @@ const CreateProductScreen = () => {
         resetFields()
     }  
 
+    const onUpdate = () => {
+        if (!validateInputs()) return
+        
+        console.warn('Updating', {name, price})
+        resetFields()
+    }  
+
+    const onSubmit = () => {
+        if (isUpdating) {
+            onUpdate()
+        } else {
+            onCreate()
+        }
+    }
+
+    const onDelete = () => {
+        console.warn('Delete')
+    }
+
+    const confirmDelete = () => {
+        Alert.alert('Delete Product', 'Are you sure you want to delete this product?', [
+            {
+                text: 'Yes',
+                onPress: onDelete
+            },
+            {
+                text: 'No',
+                style: 'cancel'
+            }
+        ])
+    }
+
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -61,14 +96,16 @@ const CreateProductScreen = () => {
 
   return (
     <View style={styles.container}>
-        <Stack.Screen options={{ title: 'Create Product' }} />
+        <Stack.Screen options={{ title: isUpdating ? 'Update Product' : 'Create Product' }} />
         <Image source={{uri: image || defaultPizzaImage }} style={styles.image} />
         <Text onPress={pickImage} style={styles.textButton}>Select Image</Text>
+        <Text style={styles.label}>Name</Text>
       <TextInput value={name} onChangeText={setName}  placeholder='name' style={styles.input}/>
       <Text style={styles.label}>Price ($)</Text>
       <TextInput value={price} onChangeText={setPrice} placeholder='9.99' style={styles.input} keyboardType='numeric'/>
         <Text style={{color: 'red'}}>{error}</Text>
-     <Button  onPress={onCreate} text='Create' />
+     <Button  onPress={onSubmit} text={ isUpdating ? 'Update' : 'Create'} />
+     {isUpdating && <Text onPress={confirmDelete} style={styles.textButton}>Delete</Text>}
     </View>
   )
 }
