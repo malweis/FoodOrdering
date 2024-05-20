@@ -26,21 +26,21 @@ const ProductDetailScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: `Order #${order.id}` }} />
-     <OrderListItem order={order} />
-     <FlatList  data={order.order_items} renderItem={ ({item }) => <OrderItemListItem orderItem={item}/> } numColumns={1} contentContainerStyle={styles.containerItems}  />
+    
+     <FlatList  data={order.order_items} renderItem={ ({item }) => <OrderItemListItem orderItem={item}/> } numColumns={1} contentContainerStyle={styles.containerItems} ListHeaderComponent={ <OrderListItem order={order} />} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:Colors.light.tabIconDefault,
+    backgroundColor:'gainsboro',
     flex: 1,
     padding: 10,
   },
 
   containerItems: {
-    backgroundColor:Colors.light.tabIconDefault,
+    backgroundColor:'gainsboro',
     flex: 1,
     gap: 10,
    marginTop: 10,
