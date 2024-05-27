@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TextInput, Image, Alert } from 'react-native'
 import React from 'react'
 import Button from '@/components/Button'
 import Colors from '@/constants/Colors'
+import { supabase } from '@/lib/supabase'
 
 import { Stack, router } from 'expo-router'
 
@@ -10,7 +11,8 @@ const SingIn = () => {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
-    const [error, setError] = React.useState('')
+   
+    const [loading, setLoading] = React.useState(false)
     
 
     const resetFields = () => {
@@ -18,27 +20,24 @@ const SingIn = () => {
         setPassword('')
     }
 
-    const validateInputs = () => {
-        setError('')
-        if (!email || !password) {
-            setError('Please fill all the fields')
-            return false
-        }
-
-      
-
-        return true
-    }
-
+  
 
     
 
-    const onSubmit = () => {
-        if (!validateInputs()) return
-        
-        console.warn('Sign In', {email, password})
-        resetFields()
-    }
+    async function  onSubmit( )   {
+        setLoading(true);
+         const {error} = await supabase.auth.signInWithPassword({ email, password });
+    
+        if (error) {
+    Alert.alert("Error", error.message);
+    setLoading(false);
+        } else {
+            Alert.alert("Success", "Logged in successfully");
+            setLoading(false);
+            resetFields();
+            // router.replace("/signIn");
+            }
+      };
 
 
 
@@ -55,8 +54,8 @@ const SingIn = () => {
       <TextInput value={email} onChangeText={setEmail}  placeholder='john@gmail.com' style={styles.input} textContentType='emailAddress' keyboardType='email-address' />
       <Text style={styles.label}>Password</Text>
       <TextInput value={password} onChangeText={setPassword}  secureTextEntry style={styles.input} textContentType='password' />
-        <Text style={{color: 'red'}}>{error}</Text>
-     <Button  onPress={onSubmit} text={'Sign In' } />
+        {/* <Text style={{color: 'red'}}>{error}</Text> */}
+     <Button  onPress={onSubmit} text={ loading ? 'Signing In...' : 'Sign In' }  disabled={loading} />
    <Text onPress={() => router.replace('/signUp')} style={styles.textButton}>Create an account</Text>
     </View>
   )
