@@ -1,24 +1,23 @@
-import { StyleSheet, ScrollView, FlatList} from 'react-native';
+import { StyleSheet, ScrollView, FlatList, ActivityIndicator, Text} from 'react-native';
 
 
-import products from '@assets/data/products';
+
 
 import Colors from '@constants/Colors';
 import ProductListItem from '@components/ProductListItem';
-import { useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+
+import { useProductList } from '@/api/products';
 
 
 export default function TabOneScreen() {
-  useEffect(() => {
-    const  fetchProducts = async () => {
-     const {data, error} = await supabase.from('products').select('*');
-     console.log(data, error)
-    }
+  const {data : products, error, isLoading} =useProductList();
 
-    fetchProducts();
-
-  }, [])
+  if (isLoading) {
+    return <ActivityIndicator/>
+  }
+  if (error) {
+    return <Text>Failed to fetch product</Text>
+  }
 
 
   return (
