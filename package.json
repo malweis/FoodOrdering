@@ -42,7 +42,8 @@
     "react-native-screens": "3.31.1",
     "react-native-tab-view": "^3.5.2",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-web": "~0.19.10"
+    "react-native-web": "~0.19.10",
+    "supabase": "^1.169.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -53,6 +54,7 @@
     "typescript": "~5.3.3"
   },
   "trustedDependencies": [
+    "react-native-elements",
     "supabase"
   ],
   "private": true

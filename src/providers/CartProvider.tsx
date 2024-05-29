@@ -1,10 +1,12 @@
-import { CartItem, Product } from "@/constants/types";
+import { CartItem, Tables } from "@/constants/types";
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { randomUUID } from "expo-crypto";
 
+type Product = Tables<'products'>;
+
 type CartType = {
   items: CartItem[];
-  onAddItem: (product: Product, size: CartItem["size"]) => void;
+  onAddItem: (product: Tables<'products'>, size: CartItem["size"]) => void;
   updateQuantity: (itemId: string, amount: -1 | 1) => void;
   total : number;
 };

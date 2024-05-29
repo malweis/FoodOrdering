@@ -3,14 +3,14 @@ import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import products from "@assets/data/products";
 
 import Colors from "@constants/Colors";
-import { Product } from "@constants/types";
+import { Product, Tables } from "@constants/types";
 import { Link, useSegments } from "expo-router";
 
 export const defaultPizzaImage =
   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
 
 interface ListProps {
-  product: Product;
+  product: Tables<'products'>;
 }
 
 const ProductListItem = ({ product }: ListProps) => {
