@@ -6,7 +6,7 @@ import { useAuth } from '@/providers/AuthProvider';
 import { supabase } from '@/lib/supabase';
 
 const index = () => {
-  const {session, loading} = useAuth();
+  const {session, loading, isAdmin} = useAuth();
 
   if (loading) {
     return <ActivityIndicator/>;
@@ -16,6 +16,12 @@ const index = () => {
   if (!session) {
     return <Redirect href="/signIn" />
   }
+
+  if (!isAdmin) {
+    return <Redirect href="/(user)" />
+  }
+
+
   const  handleSingOut = async () => {
     Alert.alert("Sign Out", "Are you sure you want to sign out?", [
       {
@@ -35,9 +41,7 @@ const index = () => {
       <Link href={'/(admin)'} asChild>
         <Button text="Admin" />
       </Link>
-      <Link href={'/(auth)'} asChild>
-        <Button text="Auth" />
-      </Link>
+    
       <Button text="Sign Out" onPress={handleSingOut} />
     </View>
   );
