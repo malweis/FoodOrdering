@@ -2,13 +2,13 @@ import { View, Text, Pressable, Image , StyleSheet} from 'react-native'
 import React from 'react'
 import { Link, useSegments } from 'expo-router'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
-import { Order } from '@/constants/types';
+import { Order, Tables } from '@/constants/types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/en';
 
 interface ListProps {
-    order: Order;
+    order: Tables<'orders'>;
   }
 
 
