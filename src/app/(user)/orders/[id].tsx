@@ -1,23 +1,29 @@
-import { View, Text, Image, StyleSheet, Pressable, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import React from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import orders from "@assets/data/orders";
-import { defaultPizzaImage } from "@/components/ProductListItem";
-import Button from "@/components/Button";
+
 import { useCart } from "@/providers/CartProvider";
-import { PizzaSize } from "@/constants/types";
 import OrderListItem from "@/components/OrderListItem";
-import Colors from "@/constants/Colors";
+
 import OrderItemListItem from "@/components/OrderItemListItem";
+import { useOrderDetails } from "@/api/orders";
 
 const ProductDetailScreen = () => {
 
-  const {onAddItem} = useCart();
-  const router =useRouter();
 
-  const { id } = useLocalSearchParams();
-  const order = orders.find((p) => p.id.toString() === id);
+  const { id: idString } = useLocalSearchParams();
+  if (!idString) return <Text>Product not found</Text>;
 
+  const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
+  const {data : order , error, isLoading} = useOrderDetails(id);
+ 
+  
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+  if (error) {
+    return <Text>Failed to fetch product</Text>;
+  }
   if (!order) {
     return <Text>Order not found</Text>;
   }

@@ -8,17 +8,18 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/en';
 import Colors from '@/constants/Colors';
 import { defaultPizzaImage } from './ProductListItem';
-
+import { Tables } from '@/database.types';
 interface ListProps {
-    orderItem: OrderItem;
-  }
+  orderItem:  {products :Tables<'products'> | null}& Tables<'order_items'>;
+}
 
 
 const OrderItemListItem = ({orderItem} : ListProps ) => {
 
-    const segments= useSegments();
-    dayjs.extend(relativeTime);
-    dayjs.locale('en');
+
+  if (orderItem.products == null) {
+    return null
+  }
 
 
   return (
