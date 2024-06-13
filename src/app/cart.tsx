@@ -13,7 +13,6 @@ const CartScreen = () => {
       <FlatList data={items} renderItem={({item}) => <CartListItem cartItem={item}/>}  contentContainerStyle={{ gap:10}}/>
     <Text style={{marginTop: 20, fontSize: 20, fontWeight: '500'}}>Total: ${total.toFixed(2)}</Text>
      <Button text="Checkout" onPress={checkout} />
-     <Button text="Checkout" onPress={checkout} />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   )
