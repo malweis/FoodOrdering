@@ -40,7 +40,7 @@ const ProductDetailScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:'gainsboro',
+    backgroundColor:'white',
     flex: 1,
     padding: 10,
   },
